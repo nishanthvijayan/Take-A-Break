@@ -1,10 +1,5 @@
-# made by following https://bitbucket.org/cpbotha/indicator-cpuspeed
+# made by following  this :  https://bitbucket.org/cpbotha/indicator-cpuspeed
 
-# To-Add:
-#	1. Bubble notifications	
-#	2. monitor idleness
-#	3. reset after logout,lock,suspend ?
-#	4. option to change break time (currently 1Hr) 
 
 import os
 from gi.repository import Gtk, GLib
@@ -15,7 +10,9 @@ except:
        from gi.repository import AppIndicator
 
 
-MINUTES_FOR_BREAK = 60
+
+MINUTES_FOR_BREAK = 50 			#time after which alert should be given
+SNOOZE_TIME = 10 				
 
 class TakeBreak:
     def __init__(self):
@@ -51,8 +48,6 @@ class TakeBreak:
         item.show()
         self.menu.append(item)
 
-
-
         self.menu.show()
         self.ind.set_menu(self.menu)
     
@@ -86,6 +81,14 @@ class TakeBreak:
     #			   If this is set correctly then the panel should never 'jiggle' as the string adjusts through out the range of options.
     def update_time(self):
         self.ind.set_label(str(self.minutes)+"m","101m")
+        if(self.minutes >=	MINUTES_FOR_BREAK and (self.minutes-MINUTES_FOR_BREAK)%SNOOZE_TIME==0): 
+        	self.notify()
+
+
+    def notify(self):
+    	msg = '"Time for a Break.."'
+        notification = os.system('notify-send -i face-laugh '+msg)
+        return
 
     def main(self):
         Gtk.main()
