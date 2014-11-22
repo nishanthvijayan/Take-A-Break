@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 # made by following  this :  https://bitbucket.org/cpbotha/indicator-cpuspeed
 
 
@@ -5,7 +6,7 @@
 import os
 import subprocess
 from gi.repository import Gtk, GLib
-
+import about_window
 try: 
        from gi.repository import AppIndicator3 as AppIndicator  
 except:  
@@ -45,6 +46,13 @@ class TakeBreak:
         item.show()
         self.menu.append(item)
 
+        #menu item for reseting the minutes.
+        item = Gtk.MenuItem()
+        item.set_label("About")
+        item.connect("activate", self.handler_menu_about )
+        item.show()
+        self.menu.append(item)
+
         # menu item for quiting the indicator
         item = Gtk.MenuItem()
         item.set_label("Exit                      ")
@@ -71,6 +79,9 @@ class TakeBreak:
     	self.minutes = 0
     	self.update_time()
 
+    def handler_menu_about(self,evt):
+    	AboutWindow = about_window.AboutWindow()
+    	AboutWindow.main()
 
     def handler_timeout(self):
         # This will be called every minute by the GLib.timeout. 	
