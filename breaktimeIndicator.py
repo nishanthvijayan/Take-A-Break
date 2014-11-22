@@ -1,7 +1,9 @@
 # made by following  this :  https://bitbucket.org/cpbotha/indicator-cpuspeed
 
 
+
 import os
+import subprocess
 from gi.repository import Gtk, GLib
 
 try: 
@@ -10,9 +12,11 @@ except:
        from gi.repository import AppIndicator
 
 
+#Config variables
 
-MINUTES_FOR_BREAK = 50 			#time after which alert should be given
+MINUTES_FOR_BREAK = 50			#time after which alert should be given
 SNOOZE_TIME = 10 				
+BREAK_INTERVAL = 5 				#min idle time after which we assume that the user has taken a break
 
 class TakeBreak:
     def __init__(self):
@@ -56,7 +60,6 @@ class TakeBreak:
         self.update_time()
 
         # then start updating every 60 seconds
-        # http://developer.gnome.org/pygobject/stable/glib-functions.html#function-glib--timeout-add-seconds
         GLib.timeout_add_seconds(60, self.handler_timeout)
 
     
@@ -70,10 +73,16 @@ class TakeBreak:
 
 
     def handler_timeout(self):
-        """	This will be called every minute by the GLib.timeout. 	"""
-        self.minutes += 1
-        self.update_time()
-        return True
+        # This will be called every minute by the GLib.timeout. 	
+         
+        # Resets the time counter if the user has been idle for too long
+
+		if idle_too_long(): 	
+			self.minutes = 0
+		else:
+			self.minutes += 1
+		self.update_time()
+		return True
 
 
     #Note: Here the second parameter is a label_guide
@@ -92,6 +101,19 @@ class TakeBreak:
 
     def main(self):
         Gtk.main()
+
+
+# Function to determine if user has taken a break
+# We assume that the user has taken a break - 
+# if idletime is greater that BREAK_INTERVAL (by default 5 minutes)
+# xprintidle is utility tool that prints out the user's idle time in milliseconds (60000ms is 1 min)
+def idle_too_long():
+	idletime = subprocess.Popen(["xprintidle"], stdout=subprocess.PIPE).communicate()[0]
+	idletime = int(idletime[:len(idletime)-1])
+	idletime = idletime/60000
+	
+	if idletime>= BREAK_INTERVAL: return True
+	else: return False
 
 
 
