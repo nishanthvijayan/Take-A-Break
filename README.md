@@ -4,7 +4,7 @@ TakeABreak is an gnome indicator app that displays the number of minutes for whi
 
 ### Improvements
 
-- Add pause/continue featue
-- Option to change alert and snooze time interval
-- Monitor idleness and adjust time accordingly
-- Reset counter on lock/unlock
+- Add pause/continue 
+- Option to change alert, snooze, idle limit times 
+- ~~Monitor idleness and adjust time accordingly~~
+
