@@ -10,12 +10,10 @@ class AboutWindow(Gtk.Window):
 		Label = Gtk.Label()
 		Label.set_markup(" Take-A-Break is an gnome indicator app that displays\n  the number of minutes for which you have been working \n "
 						" and reminds you to take a break after every 1hr or so.\n  Improve your productivity and keep your eyes healthy. \n "
-						" Created By: Nishanth Vijayan\n "
 						" Please report bugs, contribute translations, \n  and make suggestions either through github or through e-mail.\n\n "
-						" Github: <a href='https://github.com/nishanthvijayan/Take-A-Break'>https://github.com/nishanthvijayan/Take-A-Break</a>\n "
+						" Github:  <a href='https://github.com/nishanthvijayan/Take-A-Break'>https://github.com/nishanthvijayan/Take-A-Break</a>\n "
 						" Email:  nishanththegr8@gmail.com\n "
 						)
-		Label.set_selectable(True)
 		self.add(Label)
 
 

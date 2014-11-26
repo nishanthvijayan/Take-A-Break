@@ -108,6 +108,12 @@ class TakeBreak:
     def notify(self):
     	msg = '"Time for a Break.."'
         notification = os.system('notify-send -i face-laugh '+msg)
+        
+        try:
+        	os.system("cvli /usr/share/sounds/freedesktop/stereo/complete.oga  --play-and-exit")
+    	except OSError:
+    		pass
+        
         return
 
     def main(self):
@@ -115,11 +121,16 @@ class TakeBreak:
 
 
 # Function to determine if user has taken a break
-# We assume that the user has taken a break - 
-# if idletime is greater that BREAK_INTERVAL (by default 5 minutes)
+# if idletime is greater that BREAK_INTERVAL (by default 5 minutes) we assume that user has taken a break.
 # xprintidle is utility tool that prints out the user's idle time in milliseconds (60000ms is 1 min)
+# the error handling part will make sure that problems with xprintidle will not break the app completely.
 def idle_too_long():
-	idletime = subprocess.Popen(["xprintidle"], stdout=subprocess.PIPE).communicate()[0]
+	
+	try:
+		idletime = subprocess.Popen(["xprintidle"], stdout=subprocess.PIPE).communicate()[0]
+	except OSError:
+		return False
+
 	idletime = int(idletime[:len(idletime)-1])
 	idletime = idletime/60000
 	
