@@ -21,3 +21,4 @@ In the command field select the breaktimeIndicator.py file using Browse.
 - Add pause/continue 
 - Option to change alert, snooze, idle limit times 
 - ~~Monitor idleness and adjust time accordingly~~
+
