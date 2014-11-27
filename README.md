@@ -8,6 +8,7 @@ Currently the installation has to be done manually.Setup file will be added soon
 Follow these steps to run the Appindicator in your system.
 
 ```
+sudo apt-get install xprintidle
 git clone https://github.com/nishanthvijayan/Take-A-Break.git
 cd Take-A-Break
 sudo chmod +x breaktimeIndicator.py
