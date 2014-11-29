@@ -110,7 +110,7 @@ class TakeBreak:
         notification = os.system('notify-send -i face-laugh '+msg)
         
         try:
-        	os.system("cvlc /usr/share/sounds/freedesktop/stereo/complete.oga  --play-and-exit")
+        	os.system("cvlc /usr/share/sounds/freedesktop/stereo/complete.oga  --no-loop --no-repeat --play-and-exit")
     	except OSError:
     		pass
         
